@@ -17,11 +17,11 @@ gfTracker = new Enmap({name: "gfTracker"});
 
 patreonGfTracker = new Enmap({name: "patreonGfTracker"});
 
-// enmap settings front-end  
-defaultSettings = {		
+// enmap settings front-end
+defaultSettings = {
     adminRole: "GM",
     teamRole: "Team Admin",
-    prefix: "!",	
+    prefix: "!",
     privateMessage: "Hi there, welcome to our discord! \n\n Please change your nickname to your in-game IGN. \n\n Type !help for my list of commands!",
     expoTime1: "08 45",
     expoTime2: "16 45",
@@ -41,12 +41,12 @@ defaultSettings = {
     gfChannel2: 'gf2',
     team: {
         team1: {
-            name: "Team 1", 
+            name: "Team 1",
             team: []
         },
         team2: {
             name: "Team 2",
-            team: [] 
+            team: []
         },
         team3: {
             name: "Team 3",
@@ -55,12 +55,12 @@ defaultSettings = {
     },
     patreonTeam: {
         team1: {
-            name: "Team 1", 
+            name: "Team 1",
             team: []
         },
         team2: {
             name: "Team 2",
-            team: [] 
+            team: []
         },
         team3: {
             name: "Team 3",
@@ -74,7 +74,7 @@ defaultSettings = {
         },
         party2: {
             name: 'Party 2',
-            team: [] 
+            team: []
         },
         party3: {
             name: 'Party 3',
@@ -112,7 +112,7 @@ const bot = new Discord.Client({
 });
 
 
-bot.commands = new Discord.Collection(); 
+bot.commands = new Discord.Collection();
 
 const banquet = [];
 
@@ -130,14 +130,14 @@ const expedclear2 = [];
 fs.readdir("./events/", (err, files) => {
     if (err) return console.error(err);
     files.forEach(file => {
-   
+
       if (!file.endsWith(".js")) return;
-      
+
       const event = require(`./events/${file}`);
-     
+
       let eventName = file.split(".")[0];
-     
-      bot.on(eventName, event.bind(null, bot)); 
+
+      bot.on(eventName, event.bind(null, bot));
     });
   });
 
@@ -170,12 +170,12 @@ bot.on('ready', () => {
         enmap.ensure(guild.id, defaultSettings);
 
         const expedReminder = () => {
-        
+
             let expoChannel = enmap.get(guild.id, "expoChannel");
-                            
+
             let expoMessage = enmap.get(guild.id, "expoMessage");
-            
-           
+
+
                 guild.channels
                     .cache.find((channel) => {
                         if (channel.name === expoChannel && channel.type === 'text') {
@@ -187,13 +187,13 @@ bot.on('ready', () => {
                         }
                     });
         };
-    
+
         const fortReminder = () => {
             let fortChannel = enmap.get(guild.id, "fortChannel");
-                            
+
             let fortMessage = enmap.get(guild.id, "fortMessage");
-    
-           
+
+
             guild.channels
                 .cache.find((channel) => {
                     if (channel.name === fortChannel && channel.type === 'text') {
@@ -204,9 +204,9 @@ bot.on('ready', () => {
                     }
             });
         };
-    
+
         const banquetReminder = () => {
-         
+
             let banquetChannel = enmap.get(guild.id, 'banquetChannel');
             let banquetMessage = enmap.get(guild.id, 'banquetMessage');
 
@@ -221,20 +221,20 @@ bot.on('ready', () => {
                     }
                 });
         };
-    
+
         const expedAutoClear = () => {
             enmap.ensure(guild.id, defaultSettings);
-            
+
             enmap.set(guild.id, [], 'team.team1.team');
             enmap.set(guild.id, [], 'team.team2.team');
-            enmap.set(guild.id, [], 'team.team3.team');    
-            
+            enmap.set(guild.id, [], 'team.team3.team');
+
         };
-        
+
         const fortAutoClear = () => {
             enmap.ensure(guild.id, defaultSettings);
-            
-            enmap.set(guild.id, [], 'guildFort.team'); 
+
+            enmap.set(guild.id, [], 'guildFort.team');
         };
 
         const gfbTrackerAutoClear = () => {
@@ -252,7 +252,7 @@ bot.on('ready', () => {
         let banqMin = banquetTime.charAt(3) + banquetTime.charAt(4);
 
         let banqHr = banquetTime.charAt(0) + banquetTime.charAt(1);
-       
+
         let fortTime = enmap.get(guild.id, 'fortTime');
 
         let fortMin = fortTime.charAt(3) + fortTime.charAt(4);
@@ -289,17 +289,17 @@ bot.on('ready', () => {
             exped1[guild.id] = new CronJob(`00 ${expoMin1} ${expoHr1} * * *`, expedReminder, null, true, 'Europe/Oslo');
 
             exped2[guild.id] = new CronJob(`00 ${expoMin2} ${expoHr2} * * *`, expedReminder, null, true, 'Europe/Oslo');
-               
+
             fort[guild.id] = new CronJob(`00 ${fortMin} ${fortHr} * * *`, fortReminder, null, true, 'Europe/Oslo');
-                      
+
             banquet[guild.id] = new CronJob(`00 ${banqMin} ${banqHr} * * *`, banquetReminder, null, true, 'Europe/Oslo');
-               
+
             expedclear1[guild.id] = new CronJob(`00 ${expoClearMin1} ${expoClearHr1} * * *`, expedAutoClear, null, true, 'Europe/Oslo');
 
             expedclear2[guild.id] = new CronJob(`00 ${expoClearMin2} ${expoClearHr2} * * *`, expedAutoClear, null, true, 'Europe/Oslo');
-        
+
             // new CronJob(`00 01 14,22 * * *`, expedAutoClear, null, true, 'Europe/Amsterdam');
-            
+
             new CronJob(`00 01 00 * * *`, fortAutoClear, null, true, 'Europe/Oslo');
 
             // new CronJob(`00 01 00 * * 1`, gfbTrackerAutoClear, null, true, 'Europe/Amsterdam')
@@ -310,54 +310,62 @@ bot.on('ready', () => {
             exped1[guild.id] = new CronJob(`00 ${expoMin1} ${expoHr1} * * *`, expedReminder, null, true, 'Asia/Taipei');
 
             exped2[guild.id] = new CronJob(`00 ${expoMin2} ${expoHr2} * * *`, expedReminder, null, true, 'Asia/Taipei');
-               
+
             fort[guild.id] = new CronJob(`00 ${fortMin} ${fortHr} * * *`, fortReminder, null, true, 'Asia/Taipei');
-                     
+
             banquet[guild.id] = new CronJob(`00 ${banqMin} ${banqHr} * * *`, banquetReminder, null, true, 'Asia/Taipei');
-            
+
             expedclear1[guild.id] = new CronJob(`00 ${expoClearMin1} ${expoClearHr1} * * *`, expedAutoClear, null, true, 'Asia/Taipei');
 
             expedclear2[guild.id] = new CronJob(`00 ${expoClearMin2} ${expoClearHr2} * * *`, expedAutoClear, null, true, 'Asia/Taipei');
             // new CronJob(`00 01 13,21 * * *`, expedAutoClear, null, true, 'Asia/Taipei');
-            
+
             new CronJob(`00 01 00 * * *`, fortAutoClear, null, true, 'Asia/Taipei');
-            
+
             // new CronJob(`00 01 00 * * 1`, gfbTrackerAutoClear, null, true, 'Asia/Taipei')
         }
-        
+
         else {
 
-            exped1[guild.id] = new CronJob(`00 ${expoMin1} ${expoHr1} * * *`, expedReminder, null, true, 'America/Anchorage');
+            exped1[guild.id] = new CronJob(`00 ${expoMin1} ${expoHr1} * * *`, expedReminder, null, true, 'Etc/GMT+8');
 
-            exped2[guild.id]  = new CronJob(`00 ${expoMin2} ${expoHr2} * * *`, expedReminder, null, true, 'America/Anchorage');
-    
-            fort[guild.id] = new CronJob(`00 ${fortMin} ${fortHr} * * *`, fortReminder, null, true, 'America/Anchorage');
-    
-            banquet[guild.id]  = new CronJob(`00 ${banqMin} ${banqHr} * * *`, banquetReminder, null, true, 'America/Anchorage');
+            exped2[guild.id]  = new CronJob(`00 ${expoMin2} ${expoHr2} * * *`, expedReminder, null, true, 'Etc/GMT+8');
 
-            expedclear1[guild.id] = new CronJob(`00 ${expoClearMin1} ${expoClearHr1} * * *`, expedAutoClear, null, true, 'America/Anchorage');
+            fort[guild.id] = new CronJob(`00 ${fortMin} ${fortHr} * * *`, fortReminder, null, true, 'Etc/GMT+8');
 
-            expedclear2[guild.id] = new CronJob(`00 ${expoClearMin2} ${expoClearHr2} * * *`, expedAutoClear, null, true, 'America/Anchorage');
- 
+            banquet[guild.id]  = new CronJob(`00 ${banqMin} ${banqHr} * * *`, banquetReminder, null, true, 'Etc/GMT+8');
+
+            expedclear1[guild.id] = new CronJob(`00 ${expoClearMin1} ${expoClearHr1} * * *`, expedAutoClear, null, true, 'Etc/GMT+8');
+
+            expedclear2[guild.id] = new CronJob(`00 ${expoClearMin2} ${expoClearHr2} * * *`, expedAutoClear, null, true, 'Etc/GMT+8');
+
             // new CronJob(`00 01 11,19 * * *`, expedAutoClear, null, true, 'America/Anchorage');
 
-            new CronJob(`00 01 00 * * *`, fortAutoClear, null, true, 'America/Anchorage');
+            new CronJob(`00 01 00 * * *`, fortAutoClear, null, true, 'Etc/GMT+8');
 
             // new CronJob(`00 01 00 * * 1`, gfbTrackerAutoClear, null, true, 'America/Anchorage')
         }
 
-         
+
     });
 
-    
+
 });
-     
+
 
 bot.on('message', function(message) {
 
     if (message.author.bot) return;
 
     if (message.channel.type === "dm") return;
+
+    if (message.content === '!count') {
+        return message.channel.send(`Serving ${bot.guilds.cache.size} servers`);
+    }
+
+    if (message.content === '!invite') {
+        return message.channel.send(`https://discord.com/oauth2/authorize?client_id=825400805678776330&scope=bot`);
+    }
 
     // if guild does not have enmap settings, set defaultSettings as default
     enmap.ensure(message.guild.id, defaultSettings);
@@ -373,27 +381,27 @@ bot.on('message', function(message) {
 
     if (prefix == msgPrefix && commandfile && args[0] == "banquetTime") {
         commandfile.run(bot, message, args, banquet[message.guild.id]);
-    } 
+    }
 
     else if (prefix == msgPrefix && commandfile && args[0] == "fortTime") {
         commandfile.run(bot, message, args, fort[message.guild.id]);
-    } 
+    }
 
     else if (prefix == msgPrefix && commandfile && args[0] == "expoTime1") {
-        commandfile.run(bot, message, args, exped1[message.guild.id]); 
-    } 
+        commandfile.run(bot, message, args, exped1[message.guild.id]);
+    }
 
     else if (prefix == msgPrefix && commandfile && args[0] == "expoTime2") {
-        commandfile.run(bot, message, args, exped2[message.guild.id]); 
-    } 
+        commandfile.run(bot, message, args, exped2[message.guild.id]);
+    }
 
     else if (prefix == msgPrefix && commandfile && args[0] == "expoClear1") {
-        commandfile.run(bot, message, args, expedclear1[message.guild.id]); 
-    } 
+        commandfile.run(bot, message, args, expedclear1[message.guild.id]);
+    }
 
     else if (prefix == msgPrefix && commandfile && args[0] == "expoClear2") {
-        commandfile.run(bot, message, args, expedclear2[message.guild.id]); 
-    } 
+        commandfile.run(bot, message, args, expedclear2[message.guild.id]);
+    }
 
     else if (prefix == msgPrefix && commandfile && cmd == prefix + 'calc') {
         commandfile.run(bot, message, args, region);
@@ -401,11 +409,11 @@ bot.on('message', function(message) {
 
     else if (prefix == msgPrefix && commandfile && cmd == prefix + 'team') {
         commandfile.run(bot, message, args, slimeServer);
-    } 
+    }
 
     else if (prefix == msgPrefix && commandfile && cmd == prefix + 'gf') {
         commandfile.run(bot, message, args, slimeServer);
-    } 
+    }
 
     else if (prefix == msgPrefix && commandfile && cmd == prefix + 'setconf') {
         commandfile.run(bot, message, args, slimeServer);
@@ -413,8 +421,8 @@ bot.on('message', function(message) {
 
     else if (prefix == msgPrefix && commandfile) {
         commandfile.run(bot, message, args,);
-    } 
- 
+    }
+
 });
 
 // logs unhandled rejections
@@ -423,4 +431,4 @@ process.on('unhandledRejection', (reason, promise) => {
 });
 
 // bot login
-bot.login(config.token); 
+bot.login(config.token);
