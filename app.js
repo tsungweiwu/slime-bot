@@ -359,8 +359,16 @@ bot.on('message', function(message) {
 
     if (message.channel.type === "dm") return;
 
-    if (message.content === '!count') {
+    if (message.content === '!edicount') {
         return message.channel.send(`Serving ${bot.guilds.cache.size} servers`);
+    }
+
+    let guildNames = [];
+    if (message.content === '!ediservers') {
+        bot.guilds.cache.forEach(guild => {
+            guildNames.push(`${guild.name} | ${guild.id}`);
+        })
+        return message.channel.send(guildNames);
     }
 
     if (message.content === '!invite') {
