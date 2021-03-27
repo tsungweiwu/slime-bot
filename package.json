@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "discord bot for maplestory m",
   "engines": {
-    "node": "8.x"
+    "node": "12.x"
   },
   "main": "app.js",
   "scripts": {
@@ -15,19 +15,19 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "better-sqlite-pool": "^0.1.2",
-    "cron": "^1.7.0",
-    "cron-job-manager": "^2.1.1",
-    "discord.js": "^12.4.1",
-    "dotenv": "^6.2.0",
-    "enmap": "^4.8.7",
-    "forever": "^0.15.3",
-    "moment": "^2.24.0",
-    "node-cron": "^2.0.3",
-    "sqlite": "^3.0.0",
+    "better-sqlite-pool": "^0.3.0",
+    "cron": "^1.8.2",
+    "cron-job-manager": "^2.1.4",
+    "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0",
+    "enmap": "^5.8.4",
+    "forever": "^3.0.4",
+    "moment": "^2.29.1",
+    "node-cron": "^3.0.0",
+    "sqlite": "^4.0.19",
     "time": "^0.12.0"
   },
   "devDependencies": {
-    "nodemon": "^1.18.10"
+    "nodemon": "^2.0.7"
   }
 }
