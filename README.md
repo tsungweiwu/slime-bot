@@ -128,3 +128,12 @@
 **If you are using this bot, please join this discord server for Slime Bot Updates** : https://discord.gg/rkwNAxj;
 
 **Please visit the website at https://www.slimebot.org for more info**
+
+### How to Set Up
+
+- After cloning the repo, remove the node_module directory and package-lock.json file
+- If you're on Linux, download Node v10.18.0 and Python "sudo apt-get install python-is-python3"
+- Run npm install, and you're good to go
+- IF it does not compile, you might have to remove the node_module and package-lock.json and install once again.
+    - You might need to create your own config.json file with discord token inside
+- Run npm run start
