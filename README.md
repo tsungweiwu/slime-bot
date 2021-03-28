@@ -131,9 +131,11 @@
 
 ### How to Set Up
 
-- After cloning the repo, remove the node_module directory and package-lock.json file
-- If you're on Linux, download Node v10.18.0 and Python "sudo apt-get install python-is-python3"
-- Run npm install, and you're good to go
-- IF it does not compile, you might have to remove the node_module and package-lock.json and install once again.
+- After cloning the repo
+    - If you're on Linux, download Node v12.16.1 and Python "sudo apt-get install python-is-python2"
+    - You will need to install node-gyp: 'npm install node-gyp@6.0.1 -g'
+    - Set npm python version to 2.7: 'npm config set python python2.7'
+    - Remove the node_module directory and package-lock.json file
+    - Run npm install, and you're good to go
     - You might need to create your own config.json file with discord token inside
 - Run npm run start
